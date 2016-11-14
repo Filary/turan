@@ -30,7 +30,7 @@ public class testclass3 {
         }
 
 
-        System.out.println("Количество слов в которых символов больше 2: "countWord(slova));
+        System.out.println("Количество слов в которых символов больше 2: " + countWord(slova));
 
     }
 
