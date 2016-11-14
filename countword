@@ -11,6 +11,7 @@ public class testclass3 {
         int m = 0;
         int s;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите любую строку и нажмите Enter: ");
         String str = reader.readLine();
 
 
@@ -29,7 +30,7 @@ public class testclass3 {
         }
 
 
-        System.out.println(countWord(slova));
+        System.out.println("Количество слов в которых символов больше 2: "countWord(slova));
 
     }
 
