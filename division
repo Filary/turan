@@ -1,0 +1,33 @@
+/**
+ * Created by Stud on 27.10.2016.
+ */
+import java.io.IOException;
+import java.lang.String;
+import java.util.Random;
+
+public class Test {
+    public static void main(String[] args) throws IOException {
+int mass[] = new int[10];
+        int result = 0;
+        Random r = new Random();
+
+        for (int i = 0; i < mass.length; i++) {
+            mass[i] = r.nextInt(20);
+            System.out.print(mass[i]+" ");
+        }
+        System.out.println();
+        System.out.println("Результат деления: ");
+
+    for (int b = 0; b < mass.length; b++) {
+        if ((b % 2) == 0 && (b + 1) <= mass.length) {
+            try {
+            result = mass[b + 1] / mass[b];
+
+            System.out.print(result + " ");
+            }catch(ArithmeticException e){
+                System.out.print("На ноль делить нельзя ");
+            }
+        }
+    }
+
+}
