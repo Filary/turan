@@ -1,0 +1,181 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <windows.h>
+
+using namespace std;
+
+struct car
+{
+	int id;
+	int nomernoiznak;
+	char surname[20];
+	char name[20];
+	char middle_name[20];
+	int iin;
+	char adres[20];
+	int god;
+	int vin;
+};
+
+car array[100];
+struct car tmp;
+
+int sch = 0;
+int answer;
+
+FILE *f;
+void enter_new();
+int menu();
+void out();
+void v_fail();
+void iz_faila();
+
+int main()
+{
+
+	setlocale(LC_ALL, "Russian");
+	iz_faila();
+	while (1)
+	{
+		switch (menu())
+		{
+		case 1:enter_new(); break;
+		case 2:out(); break;
+		case 3:v_fail(); return 0; break;
+		default: printf("Не верный выбор\n");
+		}
+	}
+
+}
+
+int menu()
+{
+	int answer;
+	printf("Введите:\n");
+	printf("1) Ввод данных\n");
+	printf("2) Вывод на экран \n");
+	printf("3) Выход\n");
+	scanf("%d", &answer);
+	return answer;
+}
+
+void iz_faila()
+{
+	int i = 0;
+if (!(f = fopen("F1.txt", "r+b")))
+	{
+		printf("введите данные\n"); return;
+	}
+
+	while (!feof(f))
+	{
+		fscanf(f, "%d ", &array[i].id);
+		fscanf(f, "%d ", &array[i].nomernoiznak);
+		fscanf(f, "%s ", array[i].surname);
+		fscanf(f, "%s ", array[i].name);
+		fscanf(f, "%s ", array[i].middle_name);
+		fscanf(f, "%d ", &array[i].iin);
+		fscanf(f, "%s ", array[i].adres);
+		fscanf(f, "%d ", &array[i].god);
+		fscanf(f, "%s ", array[i].vin);
+		sch++;
+		i++;
+	}
+	fclose(f);
+}
+void v_fail()
+{
+	f = fopen("bazats.txt", "w+b");
+	for (int i = 0; i<sch; i++)
+	{
+		fprintf(f, "%d ", array[i].id);
+		fprintf(f, "%d ", array[i].nomernoiznak);
+		fprintf(f, "%s ", array[i].surname);
+		fprintf(f, "%s ", array[i].name);
+		fprintf(f, "%s ", array[i].middle_name);
+		fprintf(f, "%d ", array[i].iin);
+		fprintf(f, "%s ", array[i].adres);
+		fprintf(f, "%d ", array[i].god);
+		fprintf(f, "%s ", array[i].vin);
+		fprintf(f, "\r \n");
+	}
+	fclose(f);
+}
+
+void enter_new()
+{
+	if (sch<60)
+	{
+		array[sch].id = sch + 1;
+		printf("ID %d", sch + 1);
+		printf("\nВведите номер транспортного средства\n");
+		scanf("%d", &array[sch].nomernoiznak);
+		printf("Введите фамилию владельца\n");
+		scanf("%s", &array[sch].surname);
+		printf("Введите имя владельца\n");
+		scanf("%s", &array[sch].name);
+		printf("Введите отчество владельца\n");
+		scanf("%s", &array[sch].middle_name);
+		printf("Введите ИИН пациента\n");
+		scanf("%d", &array[sch].iin);
+		printf("Введите район\n");
+		scanf("%s", &array[sch].adres);
+		printf("Введите год рождения\n");
+		scanf("%d", &array[sch].god);
+		printf("Введите VIN\n");
+		scanf("%s", &array[sch].vin);
+		sch++;
+	}
+	else printf("Введено максимальное значение");
+}
+
+
+
+void out()
+{
+	int sw;
+	int k;
+	if (sch == 0)
+		printf("\n Нет записей: \n");
+	else
+	{
+		printf("\nВведите: \n");
+		printf("1-если хотите вывести какую-либо запись\n");
+		printf("2-если хотите вывести все записи\n");
+		scanf("%d", &sw);
+		if (sw == 1)
+		{
+			printf("Введите номер записи, которую нужно вывести\n");
+			scanf("%d", &k);
+			printf("\nID : %d\n", array[k-1].id);
+			printf("НОМЕР ТП :%d\n", array[k-1].nomernoiznak);
+			printf("Фамилия: %s\n", array[k-1].surname);
+			printf("Имя: %s\n", array[k-1].name);
+			printf("Отчество: %s\n", array[k-1].middle_name);
+			printf("ИИН: %d\n", array[k-1].iin);
+			printf("Район: %s\n", array[k-1].adres);
+			printf("Год рождения:%d\n", array[k-1].god);
+			printf("VIN: %s\n", array[k-1].vin);
+
+		}
+		if (sw == 2)
+		{
+			for (int i = 0; i<sch; i++)
+			{
+
+				printf("\nID : %d\n", array[i].id);
+				printf("номер:%d\n", array[i].nomernoiznak);
+				printf("Фамилия: %s\n", array[i].surname);
+				printf("Имя: %s\n", array[i].name);
+				printf("Отчество: %s\n", array[i].middle_name);
+				printf("ИИН: %d\n", array[i].iin);
+				printf("Район: %s\n", array[i].adres);
+				printf("Год рождения:%d\n", array[i].god);
+				printf("vin: %s\n", array[i].vin);
+
+			}
+		}
+	}
+}
