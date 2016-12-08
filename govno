@@ -9,14 +9,15 @@ using namespace std;
 struct car
 {
 	int id;
-	int nomernoiznak;
+	char marka;
+	char model;
+	char nomernoiznak[7];
 	char surname[20];
 	char name[20];
-	char middle_name[20];
-	int iin;
-	char adres[20];
+	char color;
+	char adres[50];
 	int god;
-	int vin;
+	char vin;
 };
 
 car array[100];
@@ -24,7 +25,6 @@ struct car tmp;
 
 int sch = 0;
 int answer;
-
 FILE *f;
 void enter_new();
 int menu();
@@ -64,38 +64,42 @@ int menu()
 void iz_faila()
 {
 	int i = 0;
-if (!(f = fopen("F1.txt", "r+b")))
+if ((f = fopen("D:\\gg\\bin\\Debug\\bazats.txt", "r")))
 	{
-		printf("введите данные\n"); return;
-	}
+		//("введите данные\n"); return;
+
 
 	while (!feof(f))
 	{
 		fscanf(f, "%d ", &array[i].id);
-		fscanf(f, "%d ", &array[i].nomernoiznak);
+		fscanf(f, "%s ", &array[i].marka);
+		fscanf(f, "%s ", array[i].model);
+		fscanf(f, "%s ", array[i].nomernoiznak);
 		fscanf(f, "%s ", array[i].surname);
-		fscanf(f, "%s ", array[i].name);
-		fscanf(f, "%s ", array[i].middle_name);
-		fscanf(f, "%d ", &array[i].iin);
+		fscanf(f, "%s ", &array[i].name);
+		fscanf(f, "%s ", &array[i].color);
 		fscanf(f, "%s ", array[i].adres);
-		fscanf(f, "%d ", &array[i].god);
+		fscanf(f, "%d", array[i].god);
 		fscanf(f, "%s ", array[i].vin);
 		sch++;
 		i++;
 	}
+	}
+
 	fclose(f);
 }
 void v_fail()
 {
-	f = fopen("bazats.txt", "w+b");
+	f = fopen("D:\\gg\\bin\\Debug\\bazats.txt", "w");
 	for (int i = 0; i<sch; i++)
 	{
 		fprintf(f, "%d ", array[i].id);
-		fprintf(f, "%d ", array[i].nomernoiznak);
+		fprintf(f, "%s ", array[i].marka);
+		fprintf(f, "%s ", array[i].model);
+		fprintf(f, "%s ", array[i].nomernoiznak);
 		fprintf(f, "%s ", array[i].surname);
 		fprintf(f, "%s ", array[i].name);
-		fprintf(f, "%s ", array[i].middle_name);
-		fprintf(f, "%d ", array[i].iin);
+		fprintf(f, "%s ", array[i].color);
 		fprintf(f, "%s ", array[i].adres);
 		fprintf(f, "%d ", array[i].god);
 		fprintf(f, "%s ", array[i].vin);
@@ -106,27 +110,30 @@ void v_fail()
 
 void enter_new()
 {
-	if (sch<60)
+	if (sch<100)
 	{
 		array[sch].id = sch + 1;
 		printf("ID %d", sch + 1);
-		printf("\nВведите номер транспортного средства\n");
-		scanf("%d", &array[sch].nomernoiznak);
+		printf("\nВведите марку\n");
+		scanf("%s", &array[sch].marka);
+		printf("Введите модель\n");
+		scanf("%s", &array[sch].model);
+		printf("Введите номерной знак\n");
+		scanf("%s", &array[sch].nomernoiznak);
 		printf("Введите фамилию владельца\n");
 		scanf("%s", &array[sch].surname);
-		printf("Введите имя владельца\n");
-		scanf("%s", &array[sch].name);
-		printf("Введите отчество владельца\n");
-		scanf("%s", &array[sch].middle_name);
-		printf("Введите ИИН пациента\n");
-		scanf("%d", &array[sch].iin);
-		printf("Введите район\n");
+		printf("Введите Имя\n");
+		scanf("%d", &array[sch].name);
+		printf("Введите цвет\n");
+		scanf("%s", &array[sch].color);
+		printf("Введите адрес регистрации\n");
 		scanf("%s", &array[sch].adres);
-		printf("Введите год рождения\n");
+		printf("Введите год выпуска\n");
 		scanf("%d", &array[sch].god);
 		printf("Введите VIN\n");
 		scanf("%s", &array[sch].vin);
 		sch++;
+
 	}
 	else printf("Введено максимальное значение");
 }
@@ -150,13 +157,14 @@ void out()
 			printf("Введите номер записи, которую нужно вывести\n");
 			scanf("%d", &k);
 			printf("\nID : %d\n", array[k-1].id);
-			printf("НОМЕР ТП :%d\n", array[k-1].nomernoiznak);
+			printf("Марка :%s\n", array[k-1].marka);
+			printf("Модель: %s\n", array[k-1].model);
+			printf("Номерной знак: %s\n", array[k-1].nomernoiznak);
 			printf("Фамилия: %s\n", array[k-1].surname);
 			printf("Имя: %s\n", array[k-1].name);
-			printf("Отчество: %s\n", array[k-1].middle_name);
-			printf("ИИН: %d\n", array[k-1].iin);
-			printf("Район: %s\n", array[k-1].adres);
-			printf("Год рождения:%d\n", array[k-1].god);
+			printf("Цвет:%s\n", array[k-1].color);
+			printf("Адрес:%s\n", array[k-1].adres);
+			printf("Год:%d\n", array[k-1].god);
 			printf("VIN: %s\n", array[k-1].vin);
 
 		}
@@ -165,15 +173,16 @@ void out()
 			for (int i = 0; i<sch; i++)
 			{
 
-				printf("\nID : %d\n", array[i].id);
-				printf("номер:%d\n", array[i].nomernoiznak);
-				printf("Фамилия: %s\n", array[i].surname);
-				printf("Имя: %s\n", array[i].name);
-				printf("Отчество: %s\n", array[i].middle_name);
-				printf("ИИН: %d\n", array[i].iin);
-				printf("Район: %s\n", array[i].adres);
-				printf("Год рождения:%d\n", array[i].god);
-				printf("vin: %s\n", array[i].vin);
+				printf("\nID : %d\n", array[k-1].id);
+			printf("Марка :%s\n", array[k-1].marka);
+			printf("Модель: %s\n", array[k-1].model);
+			printf("Номерной знак: %s\n", array[k-1].nomernoiznak);
+			printf("Фамилия: %s\n", array[k-1].surname);
+			printf("Имя: %s\n", array[k-1].name);
+			printf("Цвет:%s\n", array[k-1].color);
+			printf("Адрес:%s\n", array[k-1].adres);
+			printf("Год:%d\n", array[k-1].god);
+			printf("VIN: %s\n", array[k-1].vin);
 
 			}
 		}
