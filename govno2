@@ -1,0 +1,186 @@
+#include <windows.h>
+#include<iostream>
+#include<fstream>
+#include<string.h>
+#include <cstring>
+#include <limits>
+
+
+using namespace std;
+const int size_of_car=50;
+
+struct cars{
+int id;
+char marka[20];
+char model[20];
+int gosnomer;
+int vin;
+
+}ca[size_of_car];
+
+int write (int * j);//( int * w_count);
+void Searchmodel(char * model);
+void  Searchmarka(char *marka);
+void showCurrentDate();
+void showBase();
+void fSearchmarka(char *marka);
+void fSearchmodel(char *surname);
+
+int main(){
+int j=0;
+  setlocale(LC_ALL, "rus");
+  int stch;
+  char    marka[30],model[30];
+ int choise;
+for(;;)
+    {
+        cout<<"1.Запись в базу\n2.Поиск по марки\n3.Поиск по модели\n4.Вывод записанных данных\n5.Вывести всю базу \n6.Выход"<<endl;
+        cin>>stch;
+
+        if(stch ==6 ){break;}
+
+        switch(stch)
+        {
+
+            case 1: write(&j);j++;break;//&w_count );break;
+            case 2: cout<<" 1.Из записанных данных\n 2.Из файла"<<endl;
+            cin>>choise;
+                switch(choise){
+                 case 1: cout<<"Введите марку для поиска"<<endl;
+                     cin>>marka;
+                     Searchmarka(marka); break;
+                 case 2: cout<<"Введите марку для поиска"<<endl;
+                     cin>>marka;
+                     break;
+
+                     
+                }break;
+            case 3:  cout<<"Введите модель для поиска"<<endl;
+                     cin>>model;
+                    Searchmodel(model);break;
+            case 4: showCurrentDate(); break;
+            case 5: showBase(); break;
+
+            default:   break;
+        }
+        int i=j-1;
+   
+   if(stch==1){
+    ofstream file;
+	file.open ("base.txt",ios:: out| ios::app);
+    
+        file<<ca[i].id<<")"<<endl;
+        file<<"марка="<<ca[i].marka<<endl;
+        file<<"модель="<<ca[i].model<<endl;
+        file<<"Гос. номер="<<ca[i].gosnomer<<endl;
+        file<<"VIN="<<ca[i].vin<<endl;
+
+    //}
+   file.close();}
+}
+}
+
+int write (int *j)
+{
+ int i=*j;
+   
+       ca[i].id=(i+1);
+        cout<<"марка:"<<endl;
+        cin>>ca[i].marka;
+        cout<<"модель:"<<endl;
+         cin>>ca[i].model;
+        cout<<"Гос. номер:"<<endl;
+        cin>>ca[i].gosnomer;
+        cout<<"VIN:"<<endl;
+        cin>>ca[i].vin;
+        return 0;
+   
+}
+
+
+void  Searchmarka(char *marka)
+{
+
+    int ix;
+    int counterN=0;
+    for(int i=0; i<size_of_car; i++){
+    ix = strcspn(ca[i].marka, marka);
+    if(ix!=0)
+           {
+            cout<<" марка: "<<ca[i].marka<<endl;
+            cout<<" модель: "<<ca[i].model<<endl;
+            cout<<" Гос. номер: "<<ca[i].gosnomer<<endl;
+            cout<<" VIN: "<<ca[i].vin<<endl;
+            counterN++;
+            ix=0;
+        }
+       if(i!=(size_of_car-1)){continue;}
+       if((i==0)&&counterN!=0){continue;}
+
+       if((i==(size_of_car-1))&&counterN==0){
+        cout<<"  Такого ТС нет в базе"<<endl;}
+
+}
+}
+
+void Searchmodel(char * model)
+{
+   
+    int ix;
+    int counterN=0;
+    for(int i=0; i<size_of_car; i++){
+            
+
+    ix = strcspn(ca[i].model, model);
+    if(ix!=0)
+        
+        {
+            cout<<" марка: "<<ca[i].marka<<endl;
+            cout<<" модель: "<<ca[i].model<<endl;
+            cout<<" Гос. номер: "<<ca[i].gosnomer<<endl;
+            cout<<" VIN "<<ca[i].vin<<endl;
+            counterN++;
+            ix=0;
+        }
+       if(i!=(size_of_car-1)){continue;}
+       if((i==0)&&counterN!=0){continue;}
+
+
+       if((i==(size_of_car-1))&&counterN==0){
+        cout<<"  Такого ТС нет в базе  "<<endl;}
+
+}
+}
+void showCurrentDate ()
+{
+    for(int i=0; i<size_of_car; i++){
+            if(ca[i].id==0){break;}
+        cout<<"<--------------> "<<endl;
+        cout<<"ID.   "<<ca[i].id<<endl;
+        cout<<" марка: "<<ca[i].marka<<endl;
+        cout<<" модель: "<<ca[i].model<<endl;
+        cout<<" Гос. номер: "<<ca[i].gosnomer<<endl;
+        cout<<" VIN: "<<ca[i].vin<<endl;
+    
+
+}
+}
+
+void showBase()
+{
+    char ch = 0;
+  string line;
+  ifstream file ("base.txt");
+  if (file.is_open())
+  {
+    while((ch = file.get()) != file.eof())
+    {
+      getline (file,line);
+      cout << line << endl;
+    }
+    file.close();
+  }
+
+  else cout << "файл поврежден или не найден!";
+}
+
